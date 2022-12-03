@@ -1,7 +1,7 @@
 {
   "name": "lista-qr",
   "version": "0.1.0",
-  "homepage": "https://neilsapno.github.io/",
+  "homepage": "https://neilsapno.github.io/lista-qr",
   "private": false,
   "dependencies": {
     "@azure/msal-browser": "^2.32.0",

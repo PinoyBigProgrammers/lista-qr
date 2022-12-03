@@ -2,7 +2,7 @@ export const config = {
     auth: {
         clientId: "ce4556ff-00c1-45ce-80e1-7ae069267435",
         authority: "https://login.microsoftonline.com/stamaria.sti.edu.ph", // This is a URL (e.g. https://login.microsoftonline.com/{your tenant ID})
-        redirectUri: "http://localhost:3000",
+        redirectUri: "https://neilsapno.github.io/lista-qr/",
     },
     cache: {
         cacheLocation: "sessionStorage", // This configures where your cache will be stored
