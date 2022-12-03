@@ -2,13 +2,17 @@ export const config = {
     auth: {
         clientId: "ce4556ff-00c1-45ce-80e1-7ae069267435",
         authority: "https://login.microsoftonline.com/stamaria.sti.edu.ph", // This is a URL (e.g. https://login.microsoftonline.com/{your tenant ID})
-        redirectUri: "https://neilsapno.github.io/lista-qr/",
+        redirectUri: window.location.origin,
+        // redirectUri: "https://neilsapno.github.io/lista-qr",
     },
     cache: {
         cacheLocation: "sessionStorage", // This configures where your cache will be stored
-        storeAuthStateInCookie: false, // Set this to "true" if you are having issues on IE11 or Edge
+        storeAuthStateInCookie: true, // Set this to "true" if you are having issues on IE11 or Edge
     }
 };
+
+let accountId = "";
+
 
 // Add scopes here for ID token to be used at Microsoft identity platform endpoints.
 export const loginRequest = {

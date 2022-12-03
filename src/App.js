@@ -47,8 +47,17 @@ function App() {
     });
   }
 
+  const handleLogout = (logoutType) => {
+    if (logoutType === "popup") {
+      instance.logoutPopup({
+        postLogoutRedirectUri: "/",
+        mainWindowRedirectUri: "/" // redirects the top level app after logout
+      });
+    }
+  }
+
   useEffect(() => {
-    graphData !== null && setName(graphData.surname + ", " + graphData.givenName)
+    graphData != null && setName(graphData.surname + ", " + graphData.givenName)
   }, [graphData])
 
 
@@ -100,6 +109,7 @@ function App() {
                 <div className="ripples buttonRipples"><span className="ripplesCircle" /></div>
               </button>
             </form>
+            <Button variant="primary" style={styles.signInButton} onClick={() => { handleLogout("popup") }}>SIGN OUT</Button>
           </div>
           :
           <Button variant="primary" style={styles.signInButton} onClick={RequestProfileData}>SIGN IN WITH YOUR STI 0365 ACCOUNT</Button>
