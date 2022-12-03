@@ -23,8 +23,7 @@ function App() {
   let [section, setSection] = useState("")
   let [data, setData] = useState("");
   let [isQRShown, setIsQRShown] = useState(false);
-  let navigate = useNavigate();
-  const importantButton = useRef(null);
+  let [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const submitData = () => {
     setData(name + " " + midName + " [|] " + studentNum + " [|] " + guild + " [|] " + section);
@@ -33,7 +32,9 @@ function App() {
 
   const { instance, accounts } = useMsal();
   const [graphData, setGraphData] = useState(null);
-  let [isAuth, setIsAuth] = useState(false)
+  const isAuthenticated = useIsAuthenticated();
+  const [accessToken, setAccessToken] = useState(null);
+
 
   function RequestProfileData() {
     const request = {
@@ -42,15 +43,30 @@ function App() {
     };
     // Silently acquires an access token which is then attached to a request for Microsoft Graph data
     instance.acquireTokenSilent(request).then((response) => {
+      setAccessToken(response.accessToken);
       callMsGraph(response.accessToken).then(response => setGraphData(response));
-      console.log(response);
-      setIsAuth(true);
-      window.location.reload(false);
     }).catch((e) => {
-      instance.acquireTokenPopup(request).then((response) => {
+      instance.acquireTokenRedirect(request).then((response) => {
+        setAccessToken(response.accessToken);
         callMsGraph(response.accessToken).then(response => setGraphData(response));
       });
     });
+  }
+
+  const handleLogin = (loginType) => {
+    if (loginType === "popup") {
+      try {
+        instance.loginPopup(loginRequest)
+      } catch (e) {
+        console.log(e);
+      }
+    }
+    else if (loginType === "redirect") {
+      instance.loginRedirect(loginRequest).catch(e => {
+        console.log(e);
+      });
+
+    }
   }
 
   const handleLogout = (logoutType) => {
@@ -60,14 +76,25 @@ function App() {
         mainWindowRedirectUri: "/lista-qr" // redirects the top level app after logout
       });
     }
+    else if (logoutType === "redirect") {
+      instance.logoutRedirect({
+        postLogoutRedirectUri: "/lista-qr",
+      });
+    }
   }
 
   useEffect(() => {
-    if (graphData != null) {
-      setName(graphData.surname + ", " + graphData.givenName)
-      setIsAuth(true);
+    if (isAuthenticated) { setIsLoggedIn(true); }
+    else { setIsLoggedIn(false); }
+
+    if (isLoggedIn && name.length < 2) {
+      RequestProfileData();
     }
-  }, [graphData])
+
+    if (accessToken) {
+      setName(graphData.surname + ", " + graphData.givenName)
+    }
+  }, [graphData, isAuthenticated, isLoggedIn, name])
 
 
   return (
@@ -77,8 +104,8 @@ function App() {
           <h1>LISTA Attendance shit</h1>
           <h3>By Andrew Tate (Top G)</h3>
         </hgroup>
-        {isAuth ?
-          <div>
+        {isAuthenticated ?
+          <div div >
             <form>
               <p id='notes'>(*) means required fields.</p>
               <div className="group">
@@ -118,15 +145,11 @@ function App() {
                 <div className="ripples buttonRipples"><span className="ripplesCircle" /></div>
               </button>
             </form>
-            <Button variant="primary" ref={importantButton} style={styles.signButton} className="signButton" onClick={() => { handleLogout("popup") }}>SIGN OUT</Button>
+            <Button variant="primary" style={styles.signButton} className="signButton" onClick={() => { handleLogout("redirect") }}>SIGN OUT</Button>
           </div>
           :
-
-          <Button variant="primary" style={styles.signButton} className="signButton" onClick={RequestProfileData}>SIGN IN WITH YOUR STI 0365 ACCOUNT</Button>
-
-
+          <Button variant="primary" style={styles.signButton} className="signButton" onClick={() => handleLogin("redirect")}>SIGN IN WITH YOUR STI 0365 ACCOUNT</Button>
         }
-
         {isQRShown && <QRCoode data={data} />
         }
         <footer><a href="http://www.facebook.com/cdrcspn" rel="noopener noreferrer" target="_blank"><img alt="IREDOC#1" src={iredoc} /></a>
