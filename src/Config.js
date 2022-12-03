@@ -2,7 +2,7 @@ export const config = {
     auth: {
         clientId: "ce4556ff-00c1-45ce-80e1-7ae069267435",
         authority: "https://login.microsoftonline.com/stamaria.sti.edu.ph", // This is a URL (e.g. https://login.microsoftonline.com/{your tenant ID})
-        redirectUri: window.location.origin,
+        redirectUri: `${window.location.origin}`,
         // redirectUri: "https://neilsapno.github.io/lista-qr",
     },
     cache: {
