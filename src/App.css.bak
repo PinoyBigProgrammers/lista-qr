@@ -2,10 +2,6 @@
   box-sizing: border-box;
 }
 
-.App {
-  text-align: center;
-}
-
 body {
   @import url(https://fonts.googleapis.com/css?family=Varela+Round);
   display: flex;
@@ -55,14 +51,13 @@ h3 {
 }
 
 form {
-  width: 85vw;
-  margin: 2em auto;
+  width: 450px;
+  margin: 4em auto;
   padding: 3em 2em 2em 2em;
   background: #fafafa;
   border: 1px solid #ebebeb;
   box-shadow: rgba(0, 0, 0, 0.14902) 0px 1px 1px 0px, rgba(0, 0, 0, 0.09804) 0px 1px 2px 0px;
 }
-
 
 .group {
   font-family: 'Varela Round', sans-serif;
@@ -71,7 +66,7 @@ form {
 }
 
 select {
-  font-size: 14px;
+  font-size: 18px;
   font-size-adjust: calc(50px -10);
   padding: 10px 10px 10px 5px;
   -webkit-appearance: none;
@@ -104,7 +99,7 @@ select:not(:invalid)~label {
 }
 
 input {
-  font-size: 14px;
+  font-size: 18px;
   padding: 10px 10px 10px 5px;
   -webkit-appearance: none;
   display: block;
@@ -124,8 +119,8 @@ input:focus {
 /* Label */
 
 label {
-  color: #949494;
-  font-size: 14px;
+  color: #999;
+  font-size: 18px;
   font-weight: normal;
   position: absolute;
   pointer-events: none;
@@ -133,8 +128,6 @@ label {
   top: 10px;
   transition: all 0.2s ease;
 }
-
-
 
 
 /* active */
@@ -293,12 +286,11 @@ input:focus~.highlight {
   width: 0;
   height: 0;
   border-radius: 50%;
-  background: rgba(255, 236, 29, 0.692);
+  background: rgba(255, 255, 255, 0.25);
 }
 
 .ripples.is-active .ripplesCircle {
   animation: ripples .4s ease-in;
-  -webkit-animation: none;
 }
 
 
@@ -326,7 +318,7 @@ footer {
 
 footer p {
   color: #888;
-  font-size: 12px;
+  font-size: 13px;
   letter-spacing: .4px;
 }
 
@@ -353,87 +345,4 @@ footer img:hover {
 footer img:focus,
 footer a:focus {
   outline: none;
-}
-
-
-#firstOpt {
-  display: none;
-}
-
-.signButton {
-  background: #eb4626;
-  width: 90%;
-  font-size: 14px;
-  margin-top: 1em;
-}
-
-#notes {
-  font-size: 12px;
-  text-align: left;
-  margin-bottom: 25px;
-}
-
-
-
-
-
-
-
-
-@media screen and (min-width: 768px) {
-  .App {
-    text-align: center;
-  }
-
-  form {
-    width: 450px;
-    margin: 4em auto;
-    padding: 3em 2em 2em 2em;
-  }
-
-  .group {
-    margin-bottom: 45px;
-  }
-
-
-  select {
-    font-size: 18px;
-    font-size-adjust: calc(50px -10);
-    padding: 10px 10px 10px 5px;
-  }
-
-  optgroup {
-    font-size: 0.5px;
-  }
-
-  input {
-    font-size: 18px;
-    padding: 10px 10px 10px 5px;
-
-  }
-
-  label {
-    font-size: 18px;
-    left: 5px;
-    top: 10px;
-  }
-
-  .button {
-    padding: 12px 24px;
-    margin: .3em 0 1em 0;
-    width: 100%;
-    font-size: 16px;
-    line-height: 20px;
-  }
-
-  .signButton {
-    width: 100%;
-    font-size: 16px;
-  }
-
-  #notes {
-    font-size: 12px;
-    text-align: left;
-    margin-bottom: 25px;
-  }
 }

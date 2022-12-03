@@ -1,9 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import './App.css';
 import $ from 'jquery'
+import { useNavigate } from "react-router-dom";
 
 //MSAL
-import { useMsal } from "@azure/msal-react";
+import { useMsal, useIsAuthenticated } from "@azure/msal-react";
 import { loginRequest } from "./Config";
 import { callMsGraph } from "./graph";
 
@@ -22,14 +23,17 @@ function App() {
   let [section, setSection] = useState("")
   let [data, setData] = useState("");
   let [isQRShown, setIsQRShown] = useState(false);
+  let navigate = useNavigate();
+  const importantButton = useRef(null);
 
   const submitData = () => {
-    setData(name + midName + "[|]" + studentNum + "[|]" + guild + "[|]" + section);
+    setData(name + " " + midName + " [|] " + studentNum + " [|] " + guild + " [|] " + section);
     setIsQRShown(true);
   }
 
   const { instance, accounts } = useMsal();
   const [graphData, setGraphData] = useState(null);
+  let [isAuth, setIsAuth] = useState(false)
 
   function RequestProfileData() {
     const request = {
@@ -40,6 +44,8 @@ function App() {
     instance.acquireTokenSilent(request).then((response) => {
       callMsGraph(response.accessToken).then(response => setGraphData(response));
       console.log(response);
+      setIsAuth(true);
+      window.location.reload(false);
     }).catch((e) => {
       instance.acquireTokenPopup(request).then((response) => {
         callMsGraph(response.accessToken).then(response => setGraphData(response));
@@ -50,14 +56,17 @@ function App() {
   const handleLogout = (logoutType) => {
     if (logoutType === "popup") {
       instance.logoutPopup({
-        postLogoutRedirectUri: "/",
-        mainWindowRedirectUri: "/" // redirects the top level app after logout
+        postLogoutRedirectUri: "/lista-qr",
+        mainWindowRedirectUri: "/lista-qr" // redirects the top level app after logout
       });
     }
   }
 
   useEffect(() => {
-    graphData != null && setName(graphData.surname + ", " + graphData.givenName)
+    if (graphData != null) {
+      setName(graphData.surname + ", " + graphData.givenName)
+      setIsAuth(true);
+    }
   }, [graphData])
 
 
@@ -68,10 +77,10 @@ function App() {
           <h1>LISTA Attendance shit</h1>
           <h3>By Andrew Tate (Top G)</h3>
         </hgroup>
-        {graphData ?
+        {isAuth ?
           <div>
             <form>
-              <p style={styles.notes}>(*) means required fields.</p>
+              <p id='notes'>(*) means required fields.</p>
               <div className="group">
                 <input id='name' type="text" value={name} disabled required /><span className="highlight" /><span className="bar" />
                 <label>&thinsp; Name*</label>
@@ -86,7 +95,7 @@ function App() {
               </div>
               <div className="group">
                 <select onChange={e => setGuild(e.target.value)} value={guild} id="guild" required="required">
-                  <option style={styles.firstOption} value="" disabled="disabled"></option>
+                  <option id='firstOpt' value="" disabled="disabled"></option>
                   <optgroup></optgroup>
                   <option value="ETIKA">ETIKA</option>
                   <optgroup></optgroup>
@@ -109,10 +118,13 @@ function App() {
                 <div className="ripples buttonRipples"><span className="ripplesCircle" /></div>
               </button>
             </form>
-            <Button variant="primary" style={styles.signInButton} onClick={() => { handleLogout("popup") }}>SIGN OUT</Button>
+            <Button variant="primary" ref={importantButton} style={styles.signButton} className="signButton" onClick={() => { handleLogout("popup") }}>SIGN OUT</Button>
           </div>
           :
-          <Button variant="primary" style={styles.signInButton} onClick={RequestProfileData}>SIGN IN WITH YOUR STI 0365 ACCOUNT</Button>
+
+          <Button variant="primary" style={styles.signButton} className="signButton" onClick={RequestProfileData}>SIGN IN WITH YOUR STI 0365 ACCOUNT</Button>
+
+
         }
 
         {isQRShown && <QRCoode data={data} />
@@ -126,18 +138,11 @@ function App() {
   );
 }
 const styles = {
-  firstOption: {
-    display: 'none'
-  },
-  signInButton: {
+
+  signButton: {
     background: '#eb4626',
-    width: '100%',
-    fontSize: '16px'
-  },
-  notes: {
-    fontSize: '12px',
-    marginBottom: '25px'
   }
+
 }
 
 /*Pre ung terms and service baka malimot*/
