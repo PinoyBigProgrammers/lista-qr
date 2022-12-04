@@ -1,8 +1,6 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import './App.css';
 import $ from 'jquery'
-import { useNavigate } from "react-router-dom";
-
 //MSAL
 import { useMsal, useIsAuthenticated } from "@azure/msal-react";
 import { loginRequest } from "./Config";
@@ -84,17 +82,20 @@ function App() {
   }
 
   useEffect(() => {
-    if (isAuthenticated) { setIsLoggedIn(true); }
-    else { setIsLoggedIn(false); }
-
-    if (isLoggedIn && name.length < 2) {
-      RequestProfileData();
+    if (isAuthenticated) {
+      setIsLoggedIn(true);
+      if (isLoggedIn && name.length < 2) {
+        RequestProfileData();
+      }
+    }
+    else {
+      setIsLoggedIn(false);
     }
 
     if (accessToken) {
       setName(graphData.surname + ", " + graphData.givenName)
     }
-  }, [graphData, isAuthenticated, isLoggedIn, name])
+  }, [graphData, isAuthenticated, isLoggedIn, name]);
 
 
   return (
@@ -138,7 +139,45 @@ function App() {
                 <label>&thinsp; Guild*</label>
               </div>
               <div className="group">
-                <input onChange={e => setSection(e.target.value)} id="section" type="text" value={section} required /><span className="highlight" value={section} /><span className="bar" />
+                <select onChange={e => setSection(e.target.value)} value={section} id="section" required="required">
+                  <option id='firstOpt' value="" disabled="disabled"></option>
+                  <optgroup label="Grade 11"></optgroup>
+                  <optgroup></optgroup>
+                  <option value="ABM1101">ABM 1101</option>
+                  <optgroup></optgroup>
+                  <option value="HUMMS1101">HUMMS 1101</option>
+                  <optgroup></optgroup>
+                  <option value="STEM1101">STEM 1101</option>
+                  <optgroup></optgroup>
+                  <option value="STEM1102">STEM 1102</option>
+                  <optgroup></optgroup>
+                  <option value="ITM1101">ITM 1101</option>
+                  <optgroup></optgroup>
+                  <option value="GAS1101">GAS 1101</option>
+                  <optgroup></optgroup>
+                  <option value="DA1101">DA 1101</option>
+                  <optgroup></optgroup>
+                  <option value="CA1101">CA 1101</option>
+                  <optgroup></optgroup>
+                  <optgroup label='Grade 12'></optgroup>
+                  <optgroup></optgroup>
+                  <option value="ABM1201">ABM 1201</option>
+                  <optgroup></optgroup>
+                  <option value="HUMMS1201">HUMMS 1201</option>
+                  <optgroup></optgroup>
+                  <option value="STEM1201">STEM 1201</option>
+                  <optgroup></optgroup>
+                  <option value="STEM1202">STEM 1202</option>
+                  <optgroup></optgroup>
+                  <option value="ITM1201">ITM 1201</option>
+                  <optgroup></optgroup>
+                  <option value="GAS1201">GAS 1201</option>
+                  <optgroup></optgroup>
+                  <option value="DA1201">DA 1201</option>
+                  <optgroup></optgroup>
+                  <option value="CA1201">CA 1201</option>
+                  <optgroup></optgroup>
+                </select>
                 <label>&thinsp; Section*</label>
               </div>
               <button onClick={submitData} type="button" className=" button buttonBlue">Submit
