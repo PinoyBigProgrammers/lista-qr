@@ -22,10 +22,58 @@ function App() {
   let [data, setData] = useState("");
   let [isQRShown, setIsQRShown] = useState(false);
   let [isLoggedIn, setIsLoggedIn] = useState(false);
+  let [inputErrors, setInputErrors] = useState({
+    midName: '',
+    studentNum: '',
+    guild: '',
+    section: ''
+  });
+
+
+  const inputHandler = (e) => {
+    if (e.target.id === 'midName') {
+      setMidName(e.target.value)
+    }
+    else if (e.target.id === 'studentNum') {
+      const value = e.target.value.replace(/\D/g, '');
+      setStudent(value)
+    }
+    else if (e.target.id === 'guild') {
+      setGuild(e.target.value)
+    }
+    else if (e.target.id === 'section') {
+      setSection(e.target.value)
+    }
+    setInputErrors(prevV => {
+      return { ...prevV, [e.target.id]: '' }
+    })
+  }
 
   const submitData = () => {
-    setData(name + " " + midName + " [|] " + studentNum + " [|] " + guild + " [|] " + section);
-    setIsQRShown(true);
+    if (isEmptyOrSpaces(studentNum) || isEmptyOrSpaces(guild) || isEmptyOrSpaces(section)) {
+      if (isEmptyOrSpaces(studentNum)) {
+        setInputErrors({
+          ...inputErrors,
+          studentNum: "This field cannot be empty"
+        });
+      }
+      else if (isEmptyOrSpaces(guild)) {
+        setInputErrors({
+          ...inputErrors,
+          guild: "This field cannot be empty"
+        });
+      }
+      else if (isEmptyOrSpaces(section)) {
+        setInputErrors({
+          ...inputErrors,
+          section: "This field cannot be empty"
+        });
+      }
+    }
+    else {
+      setData(name + " " + midName + " [|] " + studentNum + " [|] " + guild + " [|] " + section);
+      setIsQRShown(true);
+    }
   }
 
   const { instance, accounts } = useMsal();
@@ -52,14 +100,7 @@ function App() {
   }
 
   const handleLogin = (loginType) => {
-    if (loginType === "popup") {
-      try {
-        instance.loginPopup(loginRequest)
-      } catch (e) {
-        console.log(e);
-      }
-    }
-    else if (loginType === "redirect") {
+    if (loginType === "redirect") {
       instance.loginRedirect(loginRequest).catch(e => {
         console.log(e);
       });
@@ -68,13 +109,7 @@ function App() {
   }
 
   const handleLogout = (logoutType) => {
-    if (logoutType === "popup") {
-      instance.logoutPopup({
-        postLogoutRedirectUri: "/lista-qr",
-        mainWindowRedirectUri: "/lista-qr" // redirects the top level app after logout
-      });
-    }
-    else if (logoutType === "redirect") {
+    if (logoutType === "redirect") {
       instance.logoutRedirect({
         postLogoutRedirectUri: "/lista-qr",
       });
@@ -93,6 +128,7 @@ function App() {
     }
 
     if (accessToken) {
+      console.log(accessToken)
       setName(graphData.surname + ", " + graphData.givenName)
     }
   }, [graphData, isAuthenticated, isLoggedIn, name]);
@@ -105,7 +141,7 @@ function App() {
           <h1>LISTA Attendance shit</h1>
           <h3>By Andrew Tate (Top G)</h3>
         </hgroup>
-        {isAuthenticated ?
+        {accessToken ?
           <div div >
             <form>
               <p id='notes'>(*) means required fields.</p>
@@ -114,17 +150,17 @@ function App() {
                 <label>&thinsp; Name*</label>
               </div>
               <div className="group">
-                <input onChange={e => setMidName(e.target.value)} id='midName' type="text" value={midName} required /><span className="highlight" /><span className="bar" />
-                <label>Middle Name</label>
+                <input onChange={inputHandler} id='midName' type="text" value={midName} required /><span className="highlight" /><span className="bar" />
+                <label>Middle Name</label><span className='error'>{inputErrors.midName} </span>
               </div>
               <div className="group">
-                <input onChange={e => setStudent(e.target.value)} id='studentNum' type="text" value={studentNum} required /><span className="highlight" /><span className="bar" />
-                <label>Student Number*</label>
+                <input onChange={inputHandler} id='studentNum' type="text" value={studentNum} required /><span className="highlight" /><span className="bar" />
+                <label>Student Number*</label><span className='error'>{inputErrors.studentNum} </span>
               </div>
               <div className="group">
-                <select onChange={e => setGuild(e.target.value)} value={guild} id="guild" required="required">
+                <select onChange={inputHandler} value={guild} id="guild" required="required">
                   <option id='firstOpt' value="" disabled="disabled"></option>
-                  <optgroup></optgroup>
+                  <optgroup label="Guilds"></optgroup>
                   <option value="ETIKA">ETIKA</option>
                   <optgroup></optgroup>
                   <option value="IREDOC">IREDOC</option>
@@ -134,12 +170,11 @@ function App() {
                   <option value="NUMERIKA">NUMERIKA</option>
                   <optgroup></optgroup>
                   <option value="SWES">SWES</option>
-                  <optgroup></optgroup>
                 </select>
-                <label>&thinsp; Guild*</label>
+                <label>&thinsp; Guild*</label><span className='error'>{inputErrors.guild} </span>
               </div>
               <div className="group">
-                <select onChange={e => setSection(e.target.value)} value={section} id="section" required="required">
+                <select onChange={inputHandler} value={section} id="section" required="required">
                   <option id='firstOpt' value="" disabled="disabled"></option>
                   <optgroup label="Grade 11"></optgroup>
                   <optgroup></optgroup>
@@ -176,9 +211,8 @@ function App() {
                   <option value="DA1201">DA 1201</option>
                   <optgroup></optgroup>
                   <option value="CA1201">CA 1201</option>
-                  <optgroup></optgroup>
                 </select>
-                <label>&thinsp; Section*</label>
+                <label>&thinsp; Section*</label><span className='error'>{inputErrors.section} </span>
               </div>
               <button onClick={submitData} type="button" className=" button buttonBlue">Submit
                 <div className="ripples buttonRipples"><span className="ripplesCircle" /></div>
@@ -205,6 +239,10 @@ const styles = {
     background: '#eb4626',
   }
 
+}
+
+function isEmptyOrSpaces(str) {
+  return str === null || str.match(/^ *$/) !== null;
 }
 
 /*Pre ung terms and service baka malimot*/

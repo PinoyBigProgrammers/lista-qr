@@ -1,5 +1,17 @@
+/* Custom fonts */
+@font-face {
+  font-family: barlowlight;
+  src: url(./fonts/Barlow-Light.ttf);
+}
+
+@font-face {
+  font-family: kollektif;
+  src: url(./fonts/Kollektif.ttf);
+}
+
 * {
   box-sizing: border-box;
+  font-family: kollektif, sans-serif;
 }
 
 .App {
@@ -7,13 +19,10 @@
 }
 
 body {
-  @import url(https://fonts.googleapis.com/css?family=Varela+Round);
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: 'Varela Round', sans-serif;
   font-style: normal;
-
   -webkit-font-smoothing: antialiased;
   background: linear-gradient(-45deg, #fe8427, #f4d03f, #0b5793, #fff);
   background-size: 400% 400%;
@@ -65,7 +74,7 @@ form {
 
 
 .group {
-  font-family: 'Varela Round', sans-serif;
+  font-family: barlowlight, sans-serif;
   position: relative;
   margin-bottom: 45px;
 }
@@ -373,8 +382,11 @@ footer a:focus {
   margin-bottom: 25px;
 }
 
-
-
+.error {
+  color: red;
+  font-size: 12px;
+  letter-spacing: 0.8pt;
+}
 
 
 
@@ -435,5 +447,9 @@ footer a:focus {
     font-size: 12px;
     text-align: left;
     margin-bottom: 25px;
+  }
+
+  .error {
+    font-size: 14px;
   }
 }
