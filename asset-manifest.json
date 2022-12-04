@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/lista-qr/static/css/main.9802be0d.css",
-    "main.js": "/lista-qr/static/js/main.ddaff6b4.js",
+    "main.css": "/lista-qr/static/css/main.06fed25e.css",
+    "main.js": "/lista-qr/static/js/main.68157ec5.js",
     "static/media/iredoc.png": "/lista-qr/static/media/iredoc.ca3e9e0aedb7baa6ceda.png",
     "index.html": "/lista-qr/index.html",
-    "main.9802be0d.css.map": "/lista-qr/static/css/main.9802be0d.css.map",
-    "main.ddaff6b4.js.map": "/lista-qr/static/js/main.ddaff6b4.js.map"
+    "main.06fed25e.css.map": "/lista-qr/static/css/main.06fed25e.css.map",
+    "main.68157ec5.js.map": "/lista-qr/static/js/main.68157ec5.js.map"
   },
   "entrypoints": [
-    "static/css/main.9802be0d.css",
-    "static/js/main.ddaff6b4.js"
+    "static/css/main.06fed25e.css",
+    "static/js/main.68157ec5.js"
   ]
 }
