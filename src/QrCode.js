@@ -25,17 +25,26 @@ export default function QrCode(props) {
     const [url, setUrl] = useState(props.data);
     const fileExt = "png"
     const ref = useRef(null);
+    const acceptedEmail = require("crypto-js");
+    let [finalEmail, setFinalEmail] = useState("");
+
 
     useEffect(() => {
-        setUrl(props.data);
+        setFinalEmail(acceptedEmail.AES.encrypt(props.data, '@stamaria.sti.edu.ph').toString());
+        // eslint-disable-next-line
+    }, [props.data]);
+
+    useEffect(() => {
+        setUrl(finalEmail);
         qrCode.append(ref.current);
         ref.current?.scrollIntoView({ behavior: 'smooth' });
-    }, [props.data]);
+    }, [finalEmail]);
 
     useEffect(() => {
         qrCode.update({
             data: url
         });
+        console.log(url);
     }, [url]);
 
     const onDownloadClick = () => {
@@ -43,6 +52,8 @@ export default function QrCode(props) {
             extension: fileExt
         });
     };
+
+
 
     return (
         <div className="QR-section">

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import './App.css';
-import $ from 'jquery'
+
 //MSAL
 import { useMsal, useIsAuthenticated } from "@azure/msal-react";
 import { loginRequest } from "./Config";
@@ -22,13 +22,13 @@ function App() {
   let [data, setData] = useState("");
   let [isQRShown, setIsQRShown] = useState(false);
   let [isLoggedIn, setIsLoggedIn] = useState(false);
+
   let [inputErrors, setInputErrors] = useState({
     midName: '',
     studentNum: '',
     guild: '',
     section: ''
   });
-
 
   const inputHandler = (e) => {
     if (e.target.id === 'midName') {
@@ -49,7 +49,8 @@ function App() {
     })
   }
 
-  const submitData = () => {
+  const submitData = (e) => {
+    e.preventDefault();
     if (isEmptyOrSpaces(studentNum) || isEmptyOrSpaces(guild) || isEmptyOrSpaces(section)) {
       if (isEmptyOrSpaces(studentNum)) {
         setInputErrors({
@@ -87,7 +88,6 @@ function App() {
       ...loginRequest,
       account: accounts[0]
     };
-    // Silently acquires an access token which is then attached to a request for Microsoft Graph data
     instance.acquireTokenSilent(request).then((response) => {
       setAccessToken(response.accessToken);
       callMsGraph(response.accessToken).then(response => setGraphData(response));
@@ -128,11 +128,31 @@ function App() {
     }
 
     if (accessToken) {
-      console.log(accessToken)
       setName(graphData.surname + ", " + graphData.givenName)
     }
-  }, [graphData, isAuthenticated, isLoggedIn, name]);
+    // eslint-disable-next-line
+  }, [graphData, isAuthenticated, isLoggedIn, name.length]);
 
+  //let b64 = "";
+  useEffect(() => {
+    if (isQRShown) {
+      //b64 = QRCoode.qrCode._canvas.toDataURL();
+      const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: { name },
+          section: { section },
+          guild: { guild }
+          //qrcode: { b64 }
+        })
+      };
+      console.log(requestOptions)
+      fetch('https://lista.deta.dev/api', requestOptions)
+        .then(response => response.json())
+        .then(data => this.setState({ postId: data.id }));
+    }
+  }, [isQRShown]);
 
   return (
     <div className="App">
@@ -143,7 +163,7 @@ function App() {
         </hgroup>
         {accessToken ?
           <div div >
-            <form>
+            <form action='#' onSubmit={submitData}>
               <p id='notes'>(*) means required fields.</p>
               <div className="group">
                 <input id='name' type="text" value={name} disabled required /><span className="highlight" /><span className="bar" />
@@ -214,7 +234,7 @@ function App() {
                 </select>
                 <label>&thinsp; Section*</label><span className='error'>{inputErrors.section} </span>
               </div>
-              <button onClick={submitData} type="button" className=" button buttonBlue">Submit
+              <button onClick={submitData} type="submit" className=" button buttonBlue">Submit
                 <div className="ripples buttonRipples"><span className="ripplesCircle" /></div>
               </button>
             </form>
@@ -246,46 +266,5 @@ function isEmptyOrSpaces(str) {
 }
 
 /*Pre ung terms and service baka malimot*/
-
-
-
-
-
-
-$(window, document, undefined).ready(function () {
-
-  $('input').blur(function () {
-    var $this = $(this);
-    if ($this.val())
-      $this.addClass('used');
-    else
-      $this.removeClass('used');
-  });
-
-  var $ripples = $('.ripples');
-
-  $ripples.on('click.Ripples', function (e) {
-
-    var $this = $(this);
-    var $offset = $this.parent().offset();
-    var $circle = $this.find('.ripplesCircle');
-
-    var x = e.pageX - $offset.left;
-    var y = e.pageY - $offset.top;
-
-    $circle.css({
-      top: y + 'px',
-      left: x + 'px'
-    });
-
-    $this.addClass('is-active');
-
-  });
-
-  $ripples.on('animationend webkitAnimationEnd mozAnimationEnd oanimationend MSAnimationEnd', function (e) {
-    $(this).removeClass('is-active');
-  });
-
-});
 
 export default App;
