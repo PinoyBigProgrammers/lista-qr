@@ -19,7 +19,7 @@ function App() {
   let [studentNum, setStudent] = useState("")
   let [guild, setGuild] = useState("")
   let [section, setSection] = useState("")
-  let [data, setData] = useState("");
+  let [data, setData] = useState({});
   let [isQRShown, setIsQRShown] = useState(false);
   let [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -32,7 +32,7 @@ function App() {
 
   const inputHandler = (e) => {
     if (e.target.id === 'midName') {
-      setMidName(e.target.value[0].toUpperCase() + ".")
+      setMidName(e.target.value)
     }
     else if (e.target.id === 'studentNum') {
       const value = e.target.value.replace(/\D/g, '');
@@ -72,7 +72,13 @@ function App() {
       }
     }
     else {
-      setData(name + " " + midName + " [|] " + studentNum + " [|] " + guild + " [|] " + section);
+      setData({
+        name: name,
+        midName: midName,
+        studentNum: studentNum,
+        guild: guild,
+        section: section
+      })
       setIsQRShown(true);
     }
   }
@@ -136,17 +142,18 @@ function App() {
   //let b64 = "";
   useEffect(() => {
     if (isQRShown) {
-      //b64 = QRCoode.qrCode._canvas.toDataURL();
+      console.log(QRCoode);
       const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           name: { name },
           section: { section },
-          guild: { guild }
-          //qrcode: { b64 }
+          guild: { guild },
+          // qrcode: { b64 }
         })
       };
+
       console.log(requestOptions)
       fetch('https://lista.deta.dev/api', requestOptions)
         .then(response => response.json())
