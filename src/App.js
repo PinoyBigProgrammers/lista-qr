@@ -32,7 +32,7 @@ function App() {
 
   const inputHandler = (e) => {
     if (e.target.id === 'midName') {
-      setMidName(e.target.value)
+      setMidName(e.target.value[0].toUpperCase() + ".")
     }
     else if (e.target.id === 'studentNum') {
       const value = e.target.value.replace(/\D/g, '');
