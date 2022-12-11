@@ -39,10 +39,14 @@ export default function QrCode(props) {
         setUrl(finalEmail);
         qrCode.append(ref.current);
         ref.current?.scrollIntoView({ behavior: 'smooth' });
-        }, [finalEmail]);
+    }, [finalEmail]);
 
     useEffect(() => {
-        let name = props.data["name"];
+        qrCode.update({
+            data: url
+        });
+
+               let name = props.data["name"];
         let section = props.data["section"];
 
         qrCode.getRawData("png")
@@ -53,7 +57,6 @@ export default function QrCode(props) {
                     let b64 = reader.result;
 
                     const requestOptions = {
-                        mode: 'no-cors',
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({
@@ -68,12 +71,6 @@ export default function QrCode(props) {
                         .then(data => this.setState({ postId: data.id }));
                 }
             });
-    }, [ref]);
-
-    useEffect(() => {
-        qrCode.update({
-            data: url
-        });
 
         console.log(url);
     }, [url]);

@@ -165,8 +165,7 @@ function App() {
     <div className="App">
       <div>
         <hgroup>
-          <h1>LISTA Attendance shit</h1>
-          <h3>By Andrew Tate (Top G)</h3>
+          <h1>LISTA QR Code Registration</h1>
         </hgroup>
         {accessToken ?
           <div div >
