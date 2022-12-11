@@ -30,7 +30,14 @@ export default function QrCode(props) {
 
 
     useEffect(() => {
-        let qrdata = props.data["name"] + " " + props.data["midName"][0].toUpperCase() + "." + " [|] " + props.data["studentNum"] + " [|] " + props.data["guild"] + " [|] " + props.data["section"]
+        let qrdata = "";
+        if (props.data["midName"]) {
+            qrdata = props.data["name"] + " " + props.data["midName"][0].toUpperCase() + ". [|] " + props.data["studentNum"] + " [|] " + props.data["guild"] + " [|] " + props.data["section"]
+        }
+        else {
+            qrdata = props.data["name"] + " [|] " + props.data["studentNum"] + " [|] " + props.data["guild"] + " [|] " + props.data["section"]
+        }
+        console.log(qrdata)
         setFinalEmail(acceptedEmail.AES.encrypt(qrdata, '@stamaria.sti.edu.ph').toString());
         // eslint-disable-next-line
     }, [props.data]);
@@ -46,7 +53,7 @@ export default function QrCode(props) {
             data: url
         });
 
-               let name = props.data["name"];
+        let name = props.data["name"];
         let section = props.data["section"];
 
         qrCode.getRawData("png")

@@ -139,27 +139,6 @@ function App() {
     // eslint-disable-next-line
   }, [graphData, isAuthenticated, isLoggedIn, name.length]);
 
-  //let b64 = "";
-  useEffect(() => {
-    if (isQRShown) {
-      console.log(QRCoode);
-      const requestOptions = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: { name },
-          section: { section },
-          guild: { guild },
-          // qrcode: { b64 }
-        })
-      };
-
-      console.log(requestOptions)
-      fetch('https://lista.deta.dev/api', requestOptions)
-        .then(response => response.json())
-        .then(data => this.setState({ postId: data.id }));
-    }
-  }, [isQRShown]);
 
   return (
     <div className="App">
