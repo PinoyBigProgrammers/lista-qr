@@ -19,7 +19,7 @@ function App() {
   let [studentNum, setStudent] = useState("")
   let [guild, setGuild] = useState("")
   let [section, setSection] = useState("")
-  let [data, setData] = useState("");
+  let [data, setData] = useState({});
   let [isQRShown, setIsQRShown] = useState(false);
   let [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -72,7 +72,13 @@ function App() {
       }
     }
     else {
-      setData(name + " " + midName + " [|] " + studentNum + " [|] " + guild + " [|] " + section);
+      setData({
+        name: name,
+        midName: midName,
+        studentNum: studentNum,
+        guild: guild,
+        section: section
+      })
       setIsQRShown(true);
     }
   }
@@ -136,17 +142,18 @@ function App() {
   //let b64 = "";
   useEffect(() => {
     if (isQRShown) {
-      //b64 = QRCoode.qrCode._canvas.toDataURL();
+      console.log(QRCoode);
       const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           name: { name },
           section: { section },
-          guild: { guild }
-          //qrcode: { b64 }
+          guild: { guild },
+          // qrcode: { b64 }
         })
       };
+
       console.log(requestOptions)
       fetch('https://lista.deta.dev/api', requestOptions)
         .then(response => response.json())
@@ -180,7 +187,8 @@ function App() {
               <div className="group">
                 <select onChange={inputHandler} value={guild} id="guild" required="required">
                   <option id='firstOpt' value="" disabled="disabled"></option>
-                  <optgroup label="Guilds"></optgroup>
+                  <optgroup label="LISTO"></optgroup>
+                  <optgroup></optgroup>
                   <option value="ETIKA">ETIKA</option>
                   <optgroup></optgroup>
                   <option value="IREDOC">IREDOC</option>
@@ -190,6 +198,21 @@ function App() {
                   <option value="NUMERIKA">NUMERIKA</option>
                   <optgroup></optgroup>
                   <option value="SWES">SWES</option>
+                  <optgroup></optgroup>
+                  <optgroup label="GILAS"></optgroup>
+                  <optgroup></optgroup>
+                  <option value="AWIT">AWIT</option>
+                  <optgroup></optgroup>
+                  <option value="SINING (MULTIMEDIA)">SINING (MULTIMEDIA)</option>
+                  <optgroup></optgroup>
+                  <option value="SINING (VISUAL ARTS)">SINING (VISUAL ARTS)</option>
+                  <optgroup></optgroup>
+                  <option value="GALAW">GALAW</option>
+                  <optgroup></optgroup>
+                  <option value="INSTRUMENTO">INSTRUMENTO</option>
+                  <optgroup></optgroup>
+                  <option value="LITERATURA">LITERATURA</option>
+                  <optgroup></optgroup>
                 </select>
                 <label>&thinsp; Guild*</label><span className='error'>{inputErrors.guild} </span>
               </div>
@@ -248,9 +271,9 @@ function App() {
         <footer><a href="http://www.facebook.com/cdrcspn" rel="noopener noreferrer" target="_blank"><img alt="IREDOC#1" src={iredoc} /></a>
           <p>STI LISTA Club. All Rights Reserved.</p>
         </footer>
-      </div >
+      </div>
 
-    </div >
+    </div>
   );
 }
 const styles = {

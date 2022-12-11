@@ -30,7 +30,8 @@ export default function QrCode(props) {
 
 
     useEffect(() => {
-        setFinalEmail(acceptedEmail.AES.encrypt(props.data, '@stamaria.sti.edu.ph').toString());
+        let qrdata = props.data["name"] + " " + props.data["midName"][0].toUpperCase() + "." + " [|] " + props.data["studentNum"] + " [|] " + props.data["guild"] + " [|] " + props.data["section"]
+        setFinalEmail(acceptedEmail.AES.encrypt(qrdata, '@stamaria.sti.edu.ph').toString());
         // eslint-disable-next-line
     }, [props.data]);
 
@@ -38,12 +39,42 @@ export default function QrCode(props) {
         setUrl(finalEmail);
         qrCode.append(ref.current);
         ref.current?.scrollIntoView({ behavior: 'smooth' });
-    }, [finalEmail]);
+        }, [finalEmail]);
+
+    useEffect(() => {
+        let name = props.data["name"];
+        let section = props.data["section"];
+
+        qrCode.getRawData("png")
+            .then(blob => {
+                let reader = new FileReader();
+                reader.readAsDataURL(blob);
+                reader.onloadend = () => {
+                    let b64 = reader.result;
+
+                    const requestOptions = {
+                        mode: 'no-cors',
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            name: { name },
+                            section: { section },
+                            qrcode: { b64 }
+                        })
+                    };
+
+                    fetch('https://lista.deta.dev/api', requestOptions)
+                        .then(response => response.json())
+                        .then(data => this.setState({ postId: data.id }));
+                }
+            });
+    }, [ref]);
 
     useEffect(() => {
         qrCode.update({
             data: url
         });
+
         console.log(url);
     }, [url]);
 
