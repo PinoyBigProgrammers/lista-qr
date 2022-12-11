@@ -30,7 +30,14 @@ export default function QrCode(props) {
 
 
     useEffect(() => {
-        let qrdata = props.data["name"] + " " + props.data["midName"][0].toUpperCase() + "." + " [|] " + props.data["studentNum"] + " [|] " + props.data["guild"] + " [|] " + props.data["section"]
+        let qrdata = "";
+        if (props.data["midName"]) {
+            qrdata = props.data["name"] + " " + props.data["midName"][0].toUpperCase() + ". [|] " + props.data["studentNum"] + " [|] " + props.data["guild"] + " [|] " + props.data["section"]
+        }
+        else {
+            qrdata = props.data["name"] + " [|] " + props.data["studentNum"] + " [|] " + props.data["guild"] + " [|] " + props.data["section"]
+        }
+        console.log(qrdata)
         setFinalEmail(acceptedEmail.AES.encrypt(qrdata, '@stamaria.sti.edu.ph').toString());
         // eslint-disable-next-line
     }, [props.data]);
@@ -39,7 +46,7 @@ export default function QrCode(props) {
         setUrl(finalEmail);
         qrCode.append(ref.current);
         ref.current?.scrollIntoView({ behavior: 'smooth' });
-        }, [finalEmail]);
+    }, [finalEmail]);
 
     useEffect(() => {
         let name = props.data["name"];
@@ -67,15 +74,14 @@ export default function QrCode(props) {
                         .then(response => response.json())
                         .then(data => this.setState({ postId: data.id }));
                 }
-            });
+            })
     }, [ref]);
 
     useEffect(() => {
         qrCode.update({
             data: url
         });
-
-        console.log(url);
+        console.log(url)
     }, [url]);
 
     const onDownloadClick = () => {
