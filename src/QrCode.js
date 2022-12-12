@@ -146,9 +146,9 @@ export default function QrCode(props) {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({
-                            name: { name },
-                            section: { section },
-                            qrcode: { b64 }
+                            name: name,
+                            section: section,
+                            qrcode: b64
                         })
                     };
 
