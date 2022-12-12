@@ -65,6 +65,7 @@ export default function QrCode(props) {
 
                     const requestOptions = {
                         method: 'POST',
+                        mode: 'no-cors',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({
                             name: { name },
