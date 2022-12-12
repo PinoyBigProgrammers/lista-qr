@@ -246,8 +246,8 @@ function App() {
         }
         {isQRShown && <QRCoode data={data} />
         }
-        <footer><a href="http://www.facebook.com/cdrcspn" rel="noopener noreferrer" target="_blank"><img alt="IREDOC#1" src={iredoc} /></a>
-          <p>STI LISTA Club. All Rights Reserved.</p>
+        <footer><a href="https://www.facebook.com/profile.php?id=100087772660179" rel="noopener noreferrer" target="_blank"><img alt="IREDOC#1" src={iredoc} /></a>
+          <p>STI LISTO Club. All Rights Reserved.</p>
         </footer>
       </div>
 

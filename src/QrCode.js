@@ -5,18 +5,97 @@ import QRCodeStyling from "qr-code-styling";
 //styles
 import Button from 'react-bootstrap/Button'
 
+//assets
+import iredoc from './assets/img/iredoc.png'
+
 
 const qrCode = new QRCodeStyling({
     width: 300,
     height: 300,
-    image: "https://upload.wikimedia.org/wikipedia/commons/c/cf/Iredoc2.svg",
+    image: iredoc,
+    //image: "https://upload.wikimedia.org/wikipedia/commons/c/cf/Iredoc2.svg",
     dotsOptions: {
-        color: "#0b5793",
-        type: "rounded"
+        type: "extra-rounded",
+        color: "#6a1a4c",
+        gradient: {
+            type: "linear",
+            rotation: 0.7853981633974483,
+            colorStops: [
+                {
+                    offset: 0,
+                    color: "#007bff"
+                },
+                {
+                    offset: 1,
+                    color: "#f4d03f"
+                }
+            ]
+        }
     },
     imageOptions: {
         crossOrigin: "anonymous",
+        hideBackgroundDots: true,
         margin: 5
+    },
+    dotsOptionsHelper: {
+        colorType: {
+            "single": true,
+            "gradient": false
+        },
+        gradient: {
+            linear: true,
+            radial: false,
+            color1: "#6a1a4c",
+            color2: "#6a1a4c",
+            rotation: 0
+        }
+    },
+    cornersSquareOptions: {
+        type: "extra-rounded",
+        color: "#f4d03f"
+    },
+    cornersSquareOptionsHelper: {
+        colorType: {
+            single: true,
+            gradient: false
+        },
+        gradient: {
+            linear: true,
+            radial: false,
+            color1: "#000000",
+            color2: "#000000",
+            rotation: "0"
+        }
+    },
+    cornersDotOptions: {
+        type: "dot",
+        color: "#007bff"
+    },
+    cornersDotOptionsHelper: {
+        colorType: {
+            single: true,
+            gradient: false
+        },
+        gradient: {
+            linear: true,
+            radial: false,
+            color1: "#000000",
+            color2: "#000000",
+            rotation: "0"
+        }
+    },
+    backgroundOptionsHelper: {
+        colorType: {
+            single: true,
+            gradient: false
+        },
+        gradient: {
+            linear: true,
+            radial: false,
+            color1: "#ffffff",
+            color2: "#ffffff",
+            rotation: "0"
+        }
     }
 });
 
