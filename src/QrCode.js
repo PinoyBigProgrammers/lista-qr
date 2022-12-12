@@ -148,7 +148,7 @@ export default function QrCode(props) {
                         body: JSON.stringify({
                             name: name,
                             section: section,
-                            qrcode: b64
+                            qrcode: b64.slice(22, b64.length)  // Only b64
                         })
                     };
 
