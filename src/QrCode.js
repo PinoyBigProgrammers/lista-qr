@@ -135,7 +135,9 @@ export default function QrCode(props) {
         let name = props.data["name"];
         let section = props.data["section"];
 
-        qrCode.getRawData("png")
+        // Wait to make sure qrcode has finished rendering
+        setTimeout(() => {
+            qrCode.getRawData("png")
             .then(blob => {
                 let reader = new FileReader();
                 reader.readAsDataURL(blob);
@@ -157,8 +159,7 @@ export default function QrCode(props) {
                         .then(data => this.setState({ postId: data.id }));
                 }
             });
-
-        console.log(url);
+        }, 1000)
     }, [url]);
 
     const onDownloadClick = () => {
