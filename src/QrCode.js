@@ -16,86 +16,20 @@ const qrCode = new QRCodeStyling({
     //image: "https://upload.wikimedia.org/wikipedia/commons/c/cf/Iredoc2.svg",
     dotsOptions: {
         type: "extra-rounded",
-        color: "#6a1a4c",
-        gradient: {
-            type: "linear",
-            rotation: 0.7853981633974483,
-            colorStops: [
-                {
-                    offset: 0,
-                    color: "#007bff"
-                },
-                {
-                    offset: 1,
-                    color: "#f4d03f"
-                }
-            ]
-        }
+        color: '#ffc107'
     },
     imageOptions: {
         crossOrigin: "anonymous",
         hideBackgroundDots: true,
         margin: 5
     },
-    dotsOptionsHelper: {
-        colorType: {
-            "single": true,
-            "gradient": false
-        },
-        gradient: {
-            linear: true,
-            radial: false,
-            color1: "#6a1a4c",
-            color2: "#6a1a4c",
-            rotation: 0
-        }
-    },
     cornersSquareOptions: {
         type: "extra-rounded",
-        color: "#f4d03f"
-    },
-    cornersSquareOptionsHelper: {
-        colorType: {
-            single: true,
-            gradient: false
-        },
-        gradient: {
-            linear: true,
-            radial: false,
-            color1: "#000000",
-            color2: "#000000",
-            rotation: "0"
-        }
+        color: '#0b5793'
     },
     cornersDotOptions: {
         type: "dot",
-        color: "#007bff"
-    },
-    cornersDotOptionsHelper: {
-        colorType: {
-            single: true,
-            gradient: false
-        },
-        gradient: {
-            linear: true,
-            radial: false,
-            color1: "#000000",
-            color2: "#000000",
-            rotation: "0"
-        }
-    },
-    backgroundOptionsHelper: {
-        colorType: {
-            single: true,
-            gradient: false
-        },
-        gradient: {
-            linear: true,
-            radial: false,
-            color1: "#ffffff",
-            color2: "#ffffff",
-            rotation: "0"
-        }
+        color: '#0b5793'
     }
 });
 
@@ -138,27 +72,29 @@ export default function QrCode(props) {
         // Wait to make sure qrcode has finished rendering
         setTimeout(() => {
             qrCode.getRawData("png")
-            .then(blob => {
-                let reader = new FileReader();
-                reader.readAsDataURL(blob);
-                reader.onloadend = () => {
-                    let b64 = reader.result;
+                .then(blob => {
+                    let reader = new FileReader();
+                    reader.readAsDataURL(blob);
+                    reader.onloadend = () => {
+                        let b64 = reader.result;
 
-                    const requestOptions = {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            name: name,
-                            section: section,
-                            qrcode: b64.slice(22, b64.length)  // Only b64
-                        })
-                    };
+                        const requestOptions = {
+                            method: 'POST',
+                            mode: 'no-cors',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                name: { name },
+                                section: { section },
+                                qrcode: { b64 }
+                            })
+                        };
 
-                    fetch('https://lista.deta.dev/api', requestOptions)
-                        .then(response => response.json())
-                        .then(data => this.setState({ postId: data.id }));
-                }
-            });
+                        fetch('https://lista.deta.dev/api', requestOptions)
+                            .then(response => response.json())
+                            .then(data => this.setState({ postId: data.id }));
+                    }
+                });
+
         }, 1000)
     }, [url]);
 

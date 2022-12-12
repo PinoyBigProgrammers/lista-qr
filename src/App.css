@@ -331,6 +331,11 @@ input:focus~.highlight {
 
 footer {
   text-align: center;
+  transform: translate(0, 100%);
+  -webkit-transform: translate(0, 100%);
+  -moz-transform: translate(0, 100%);
+  -ms-transform: translate(0, 100%);
+  -o-transform: translate(0, 100%);
 }
 
 footer p {
@@ -371,7 +376,8 @@ footer a:focus {
 
 .signButton {
   background: #eb4626;
-  width: 90%;
+  min-width: 80%;
+  max-width: 90%;
   font-size: 14px;
   margin-top: 1em;
 }
@@ -451,5 +457,549 @@ footer a:focus {
 
   .error {
     font-size: 14px;
+  }
+}
+
+
+
+
+/* Custom fonts */
+@font-face {
+  font-family: barlowlight;
+  src: url(./fonts/Barlow-Light.ttf);
+}
+
+@font-face {
+  font-family: kollektif;
+  src: url(./fonts/Kollektif.ttf);
+}
+
+* {
+  box-sizing: border-box;
+  font-family: kollektif, sans-serif;
+}
+
+.App {
+  text-align: center;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  background: linear-gradient(-45deg, #fe8427, #f4d03f, #0b5793, #fff);
+  background-size: 400% 400%;
+  animation: gradient 20s ease infinite;
+  min-height: 100vh;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+
+hgroup {
+  text-align: center;
+  margin-top: 4em;
+}
+
+h1,
+h3 {
+  font-weight: 300;
+}
+
+h1 {
+  color: #636363;
+}
+
+h3 {
+  color: #0b5793;
+}
+
+form {
+  width: 85vw;
+  margin: 2em auto;
+  padding: 3em 2em 2em 2em;
+  background: #fafafa;
+  border: 1px solid #ebebeb;
+  box-shadow: rgba(0, 0, 0, 0.14902) 0px 1px 1px 0px, rgba(0, 0, 0, 0.09804) 0px 1px 2px 0px;
+}
+
+
+.group {
+  font-family: barlowlight, sans-serif;
+  position: relative;
+  margin-bottom: 45px;
+}
+
+select {
+  font-size: 14px;
+  font-size-adjust: calc(50px -10);
+  padding: 10px 10px 10px 5px;
+  -webkit-appearance: none;
+  display: block;
+  background: #fafafa;
+  color: #636363;
+  width: 100%;
+  border: none;
+  border-radius: 0;
+  border-bottom: 1px solid #757575;
+}
+
+optgroup {
+  font-size: 5px;
+}
+
+select:focus {
+  outline: none;
+  border-bottom: 3px solid #0b5793;
+}
+
+select:focus~label,
+select.used~label,
+select:not(:invalid)~label {
+  top: -20px;
+  transform: scale(.75);
+  left: -2px;
+  /* font-size: 14px; */
+  color: #0b5793;
+}
+
+input {
+  font-size: 14px;
+  padding: 10px 10px 10px 5px;
+  -webkit-appearance: none;
+  display: block;
+  background: #fafafa;
+  color: #636363;
+  width: 100%;
+  border: none;
+  border-radius: 0;
+  border-bottom: 1px solid #757575;
+}
+
+input:focus {
+  outline: none;
+}
+
+
+/* Label */
+
+label {
+  color: #949494;
+  font-size: 14px;
+  font-weight: normal;
+  position: absolute;
+  pointer-events: none;
+  left: 5px;
+  top: 10px;
+  transition: all 0.2s ease;
+}
+
+
+
+
+/* active */
+
+input:focus~label,
+input.used~label,
+input:not(:invalid)~label {
+  top: -20px;
+  transform: scale(.8);
+  left: -2px;
+  /*font-size: 14px;
+  */
+  color: #0b5793;
+  -webkit-transform: scale(.8);
+  -moz-transform: scale(.8);
+  -ms-transform: scale(.8);
+  -o-transform: scale(.8);
+}
+
+
+/* Underline */
+
+.bar {
+  position: relative;
+  display: block;
+  width: 100%;
+}
+
+.bar:before,
+.bar:after {
+  content: '';
+  height: 2px;
+  width: 0;
+  bottom: 1px;
+  position: absolute;
+  background: #0b5793;
+  transition: all 0.2s ease;
+}
+
+.bar:before {
+  left: 50%;
+}
+
+.bar:after {
+  right: 50%;
+}
+
+
+/* active */
+
+input:focus~.bar:before,
+input:focus~.bar:after {
+  width: 50%;
+}
+
+
+/* Highlight */
+
+.highlight {
+  position: absolute;
+  height: 60%;
+  width: 100px;
+  top: 25%;
+  left: 0;
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+
+/* active */
+
+input:focus~.highlight {
+  animation: inputHighlighter 0.3s ease;
+}
+
+
+/* Animations */
+
+@keyframes inputHighlighter {
+  from {
+    background: #0b5793;
+  }
+
+  to {
+    width: 0;
+    background: transparent;
+  }
+}
+
+
+/* Button */
+
+.button {
+  position: relative;
+  display: inline-block;
+  padding: 12px 24px;
+  margin: .3em 0 1em 0;
+  width: 100%;
+  vertical-align: middle;
+  color: #fff;
+  font-size: 16px;
+  line-height: 20px;
+  -webkit-font-smoothing: antialiased;
+  text-align: center;
+  letter-spacing: 1px;
+  background: transparent;
+  border: 0;
+  border-bottom: 2px solid #3160B6;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.button:focus {
+  outline: 0;
+}
+
+.button:hover {
+  cursor: pointer;
+  background-color: #f4d03f;
+}
+
+
+/* Button modifiers */
+
+.buttonBlue {
+  background: #0b5793;
+  text-shadow: 1px 1px 0 rgba(39, 110, 204, .5);
+}
+
+.buttonBlue:hover {
+  background: #357bd8;
+}
+
+
+/* Ripples container */
+
+.ripples {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: transparent;
+}
+
+
+/* Ripples circle */
+
+.ripplesCircle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 236, 29, 0.692);
+}
+
+.ripples.is-active .ripplesCircle {
+  animation: ripples .4s ease-in;
+  -webkit-animation: none;
+}
+
+
+/* Ripples animation */
+
+@keyframes ripples {
+  0% {
+    opacity: 0;
+  }
+
+  25% {
+    opacity: 1;
+  }
+
+  100% {
+    width: 200%;
+    padding-bottom: 200%;
+    opacity: 0;
+  }
+}
+
+footer {
+  text-align: center;
+}
+
+footer p {
+  color: #888;
+  font-size: 12px;
+  letter-spacing: .4px;
+}
+
+footer a {
+  color: #0b5793;
+  text-decoration: none;
+  transition: all .2s ease;
+}
+
+footer a:hover {
+  color: #666;
+  text-decoration: underline;
+}
+
+footer img {
+  width: 80px;
+  transition: all .2s ease;
+}
+
+footer img:hover {
+  opacity: .83;
+}
+
+footer img:focus,
+footer a:focus {
+  outline: none;
+}
+
+
+#firstOpt {
+  display: none;
+}
+
+.signButton {
+  background: #eb4626;
+  width: 90%;
+  font-size: 14px;
+  margin-top: 1em;
+}
+
+#notes {
+  font-size: 12px;
+  text-align: left;
+  margin-bottom: 25px;
+}
+
+.error {
+  color: red;
+  font-size: 12px;
+  letter-spacing: 0.8pt;
+}
+
+
+.terms-box {
+  z-index: 2;
+  max-width: 90vw;
+  background-color: #111;
+  color: #fff;
+  font-family: "Montserrat";
+  padding: 60px 30px;
+  display: none;
+  position: absolute;
+  transform: translate(6%, -55%);
+  -webkit-transform: translate(6%, -55%);
+  -moz-transform: translate(6%, -55%);
+  -ms-transform: translate(6%, -55%);
+  -o-transform: translate(6%, -55%);
+}
+
+.terms-text {
+  padding: 0 20px;
+  height: 400px;
+  overflow-y: auto;
+  font-size: 14px;
+  font-weight: 500;
+  color: #f1f1f1;
+}
+
+.terms-text::-webkit-scrollbar {
+  width: 2px;
+  background-color: #282828;
+}
+
+.terms-text::-webkit-scrollbar-thumb {
+  background-color: #d13639;
+}
+
+.terms-text h2 {
+  text-transform: uppercase;
+}
+
+.terms-box h4 {
+  font-size: 13px;
+  text-align: center;
+  padding: 0 40px;
+}
+
+.terms-box h4 span {
+  color: #d13639;
+}
+
+.buttons {
+  display: flex;
+  padding: 0 20px;
+  justify-content: space-between;
+}
+
+.btnt {
+  height: 50px;
+  width: calc(50% - 6px);
+  border: 0;
+  border-radius: 6px;
+  font-size: 19px;
+  font-weight: 500;
+  color: #fff;
+  transition: .3s linear;
+  cursor: pointer;
+}
+
+.red-btnt {
+  background-color: #d13639;
+}
+
+.gray-btnt {
+  background-color: #282828;
+}
+
+.btnt:hover {
+  opacity: .6;
+}
+
+@media screen and (min-width: 768px) {
+  .App {
+    text-align: center;
+  }
+
+  form {
+    width: 450px;
+    margin: 4em auto;
+    padding: 3em 2em 2em 2em;
+  }
+
+  .group {
+    margin-bottom: 45px;
+  }
+
+
+  select {
+    font-size: 18px;
+    font-size-adjust: calc(50px -10);
+    padding: 10px 10px 10px 5px;
+  }
+
+  optgroup {
+    font-size: 55px;
+  }
+
+  input {
+    font-size: 18px;
+    padding: 10px 10px 10px 5px;
+
+  }
+
+  label {
+    font-size: 18px;
+    left: 5px;
+    top: 10px;
+  }
+
+  .button {
+    padding: 12px 24px;
+    margin: .3em 0 1em 0;
+    width: 100%;
+    font-size: 16px;
+    line-height: 20px;
+  }
+
+  .signButton {
+    min-width: 100%;
+    font-size: 16px;
+  }
+
+  #notes {
+    font-size: 12px;
+    text-align: left;
+    margin-bottom: 25px;
+  }
+
+  .error {
+    font-size: 14px;
+  }
+
+  .terms-box {
+    max-width: 460px;
+    padding: 1 30px;
+    transform: translate(8%, -50%);
+    -webkit-transform: translate(8%, -50%);
+    -moz-transform: translate(8%, -50%);
+    -ms-transform: translate(8%, -50%);
+    -o-transform: translate(8%, -50%);
   }
 }
