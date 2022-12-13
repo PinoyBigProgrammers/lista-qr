@@ -22,6 +22,8 @@ function App() {
   let [data, setData] = useState({});
   let [isQRShown, setIsQRShown] = useState(false);
   let [isLoggedIn, setIsLoggedIn] = useState(false);
+  let [alreadySubmitted, setAlreadySubmitted] = useState(false);
+  let [submitButtonText, setSubmitButtonText] = useState("Submit");
 
   let [inputErrors, setInputErrors] = useState({
     midName: '',
@@ -80,6 +82,9 @@ function App() {
         section: section
       })
       setIsQRShown(true);
+
+      setAlreadySubmitted(true);
+      setSubmitButtonText("Already submitted");
     }
   }
 
@@ -239,7 +244,7 @@ function App() {
                 </select>
                 <label>&thinsp; Section*</label><span className='error'>{inputErrors.section} </span>
               </div>
-              <button onClick={submitData} type="submit" className="button buttonBlue">Submit
+              <button onClick={submitData} disabled={alreadySubmitted} type="submit" className="button buttonBlue">{submitButtonText}
                 <div className="ripples buttonRipples"><span className="ripplesCircle" /></div>
               </button>
             </form>
