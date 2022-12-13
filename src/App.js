@@ -396,8 +396,19 @@ function App() {
         }
         {isQRShown && <QRCoode data={data} />
         }
+        <div id="about" class="about-container">
+          <div class="about">
+            <h2>Our Team</h2>
+            <p>• Cedric Sapno</p>
+            <p>• Ciel Angelo Mendoza</p>
+            <p>• Brylle Olaivar</p>
+            <p>• Isha Mei Laope</p>
+            <button className='btn-about' onClick={() => document.getElementById('about').style.display = 'none'} id="ok">Close</button>
+          </div>
+        </div>
         <footer><a href="https://www.facebook.com/profile.php?id=100087772660179" rel="noopener noreferrer" target="_blank"><img alt="IREDOC#1" src={iredoc} /></a>
           <p>Pinoy Big Programmers (PBP). All Rights Reserved.</p>
+          <a href='#about' onClick={() => document.getElementById('about').style.display = 'block'}><p style={{ color: '#000B47', marginTop: '-10px' }}>Team</p></a>
         </footer>
       </div>
     </div>
