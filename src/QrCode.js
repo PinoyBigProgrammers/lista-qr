@@ -12,16 +12,16 @@ import iredoc from './assets/img/iredoc.png'
 const qrCode = new QRCodeStyling({
     width: 300,
     height: 300,
+    margin: 5,
     image: iredoc,
     //image: "https://upload.wikimedia.org/wikipedia/commons/c/cf/Iredoc2.svg",
     dotsOptions: {
         type: "extra-rounded",
-        color: '#ffc107'
+        color: '#0b5793'
     },
     imageOptions: {
         crossOrigin: "anonymous",
-        hideBackgroundDots: true,
-        margin: 5
+        hideBackgroundDots: true
     },
     cornersSquareOptions: {
         type: "extra-rounded",
@@ -80,7 +80,6 @@ export default function QrCode(props) {
 
                         const requestOptions = {
                             method: 'POST',
-                            mode: 'no-cors',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({
                                 name: { name },
