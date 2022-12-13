@@ -224,6 +224,8 @@ function App() {
                   <optgroup></optgroup>
                   <option value="CA1101">CA 1101</option>
                   <optgroup></optgroup>
+                  <option value="TO1101">TO 1101</option>
+                  <optgroup></optgroup>
                   <optgroup label='Grade 12'></optgroup>
                   <optgroup></optgroup>
                   <option value="ABM1201">ABM 1201</option>
@@ -241,6 +243,8 @@ function App() {
                   <option value="DA1201">DA 1201</option>
                   <optgroup></optgroup>
                   <option value="CA1201">CA 1201</option>
+                  <optgroup></optgroup>
+                  <option value="TO1201">TO 1201</option>
                 </select>
                 <label>&thinsp; Section*</label><span className='error'>{inputErrors.section} </span>
               </div>
