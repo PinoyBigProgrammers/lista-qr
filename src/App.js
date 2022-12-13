@@ -111,7 +111,7 @@ function App() {
     }
     else if (loginType === "redirect") {
       instance.loginRedirect(loginRequest).catch(e => {
-        console.log(e);
+        //console.log(e);
       });
 
     }

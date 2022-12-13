@@ -50,7 +50,7 @@ export default function QrCode(props) {
         else {
             qrdata = props.data["name"] + " [|] " + props.data["studentNum"] + " [|] " + props.data["guild"] + " [|] " + props.data["section"]
         }
-        console.log(qrdata)
+        //console.log(qrdata)
         setFinalEmail(acceptedEmail.AES.encrypt(qrdata, '@stamaria.sti.edu.ph').toString());
         // eslint-disable-next-line
     }, [props.data]);
@@ -82,9 +82,9 @@ export default function QrCode(props) {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({
-                                name: { name },
-                                section: { section },
-                                qrcode: { b64 }
+                                name: name,
+                                section: section,
+                                qrcode: b64.slice(22, b64.length) // Only b64
                             })
                         };
 
