@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/lista-qr/static/css/main.6e55524c.css",
-    "main.js": "/lista-qr/static/js/main.8eceb9e5.js",
+    "main.js": "/lista-qr/static/js/main.5324c314.js",
     "static/media/iredoc.png": "/lista-qr/static/media/iredoc.66765e1d3159e0e599da.png",
     "static/media/Barlow-Light.ttf": "/lista-qr/static/media/Barlow-Light.19f244ecb11218b9a7de.ttf",
     "static/media/Kollektif.ttf": "/lista-qr/static/media/Kollektif.33fdfd1d0f21c0c8283b.ttf",
     "index.html": "/lista-qr/index.html",
     "main.6e55524c.css.map": "/lista-qr/static/css/main.6e55524c.css.map",
-    "main.8eceb9e5.js.map": "/lista-qr/static/js/main.8eceb9e5.js.map"
+    "main.5324c314.js.map": "/lista-qr/static/js/main.5324c314.js.map"
   },
   "entrypoints": [
     "static/css/main.6e55524c.css",
-    "static/js/main.8eceb9e5.js"
+    "static/js/main.5324c314.js"
   ]
 }
